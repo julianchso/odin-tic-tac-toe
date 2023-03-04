@@ -1,49 +1,78 @@
-// Setting up the gameboard
+'use strict';
 
-const gameboard = function () {
-  const rows = 3;
-  const columns = 3;
+// Setting up the gameboard by using a 2D array.
+// A module is used because only one is needed.
+
+const gameboard = (() => {
+  const row = 3;
+  const col = 3;
   const board = [];
 
-  for (let i = 0; i < rows; i++) {
+  for (let i = 0; i < row; i++) {
     board[i] = [];
-    for (let j = 0; j < columns; j++) {
-      board[i].push(cell());
+    for (let j = 0; j < col; j++) {
+      board[i][j] = '';
     }
   }
 
-  // This function is so that the game controller can get the game board.
-  const getBoard = () => board;
-
-  // print board to console after every turn.
-  // temporary, will not need it after board is rendered to UI.
-  const printBoard = () => {
-    const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()));
-    console.log(boardWithCellValues);
+  const setPiece = (row, col, player) => {
+    board[row][col] = player.getToken(player);
   };
-  return { getBoard, printBoard };
+
+  return { setPiece };
+})();
+
+// Factory function for players with their token of choice.
+// A factory is used because we need multiple.
+const player = (token) => {
+  const tokenX = document.querySelector('#x');
+  const tokenO = document.querySelector('#o');
+  let _token = token;
+
+  const getToken = () => _token;
+
+  const setToken = (token, active) => {
+    tokenX.addEventListener('click', () => {
+      token = 'x';
+      tokenX.classList.add('tokenBtnSelected');
+      tokenO.classList.remove('tokenBtnSelected');
+    });
+    tokenO.addEventListener('click', () => {
+      token = 'o';
+      tokenO.classList.add('tokenBtnSelected');
+      tokenX.classList.remove('tokenBtnSelected');
+    });
+  };
+
+  return { getToken, setToken };
 };
 
-// Each cell starts with a value of 0 and can be changed.
-function cell() {
-  let value = 0;
-  const getValue = () => value;
-  return {
-    getValue,
-  };
-}
-
 // gameController controls the flow of the game.
-function gameController() {
-  const board = gameboard();
+// A module is used because only one is needed.
 
-  const newGame = () => {
-    board.printBoard();
-  };
+const gameController = (() => {
+  const _humanPlayer1 = player('x');
+  const _humanPlayer2 = player('o');
+})();
 
-  newGame();
+// Rendering results
+// Use the state of the game to render results
+// Do not use the visuals on the DOM to control the state.
+function displayController() {
+  const gameboard = document.querySelector('#gameboard');
+  const cells = Array.from(document.querySelectorAll('.cell'));
+
+  console.log(cells);
+  cells.forEach((cell) => {
+    cell.addEventListener('click', playRound);
+  });
 }
 
-const game = gameController();
+const playRound = (e) => {
+  console.log(e.target);
+  e.target.textContent = 'x';
+};
 
-console.log(game);
+displayController();
+// const test = player();
+// test.setToken();

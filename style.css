@@ -1,0 +1,132 @@
+:root {
+  --green: #57a6ad;
+  --dullgreen: #68a7ad;
+  --purple: #9d79ad;
+  --brown: #ad7b57;
+  --yellow: #9aad5f;
+}
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/*
+    2. Remove default margin
+  */
+* {
+  margin: 0;
+}
+/*
+    3. Allow percentage-based heights in the application
+  */
+html,
+body {
+  height: 100%;
+}
+/*
+    Typographic tweaks!
+    4. Add accessible line-height
+    5. Improve text rendering
+  */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+    6. Improve media defaults
+  */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+    7. Remove built-in form typography styles
+  */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+/*
+    8. Avoid text overflows
+  */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+/*
+    9. Create a root stacking context
+  */
+#root,
+#__next {
+  isolation: isolate;
+}
+
+body {
+  font-family: 'Quicksand', 'montserrat';
+  font-family: 'montserrat', 'Quicksand';
+}
+
+#gameboard {
+  margin: 50px auto;
+  height: 500px;
+  width: 500px;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px 10px;
+}
+
+#title {
+  height: 50px;
+  width: 960px;
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+  font-weight: 300;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.cell {
+  background-color: aliceblue;
+  border-radius: 10px;
+  border: none;
+}
+
+.token {
+  width: 960px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.tokenBtn {
+  width: 100px;
+  margin: 0 20px;
+  padding: 5px 30px;
+  border: none;
+  border: 2px solid #68a7ad;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.tokenBtnSelected {
+  background-color: #68a7ad;
+  color: #fff;
+}
+
+button {
+  cursor: pointer;
+}

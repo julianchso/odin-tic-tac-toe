@@ -4,11 +4,42 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Tic-Tac-Toe</title>
   </head>
   <body>
-    <h1>Tic-Tac-Toe Game</h1>
-
+    <h1 id="title">Tic-Tac-Toe Game</h1>
+    <div class="token">
+      <button id="x" class="tokenBtn tokenBtnSelected">x</button>
+      <button id="o" class="tokenBtn">o</button>
+    </div>
+    <div id="gameboard">
+      <button class="cell" data-cellID="1"></button>
+      <button class="cell" data-cellID="2"></button>
+      <button class="cell" data-cellID="3"></button>
+      <button class="cell" data-cellID="4"></button>
+      <button class="cell" data-cellID="5"></button>
+      <button class="cell" data-cellID="6"></button>
+      <button class="cell" data-cellID="7"></button>
+      <button class="cell" data-cellID="8"></button>
+      <button class="cell" data-cellID="9"></button>
+    </div>
     <script type="text/javascript" src="index.js"></script>
   </body>
 </html>
