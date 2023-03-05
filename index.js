@@ -4,22 +4,34 @@
 // A module is used because only one is needed.
 
 const gameboard = (() => {
-  const row = 3;
-  const col = 3;
+  const rows = 3;
+  const cols = 3;
   const board = [];
 
-  for (let i = 0; i < row; i++) {
+  for (let i = 0; i < rows; i++) {
     board[i] = [];
-    for (let j = 0; j < col; j++) {
+    for (let j = 0; j < cols; j++) {
       board[i][j] = '';
     }
   }
 
+  // Set player token in the index of the board
   const setPiece = (row, col, player) => {
-    board[row][col] = player.getToken(player);
+    board[row][col] = player.getToken();
   };
 
-  return { setPiece };
+  const boardClickLocation = () => {};
+
+  // Get board so that gameController can find index to set token
+  const getBoard = () => {
+    board;
+  };
+
+  const printBoard = () => {
+    console.log(board);
+  };
+
+  return { setPiece, getBoard, printBoard };
 })();
 
 // Factory function for players with their token of choice.
@@ -53,26 +65,37 @@ const player = (token) => {
 const gameController = (() => {
   const _humanPlayer1 = player('x');
   const _humanPlayer2 = player('o');
+
+  let activePlayer = _humanPlayer1;
+
+  const switchPlayer = () => {
+    activePlayer = activePlayer == _humanPlayer1 ? _humanPlayer2 : _humanPlayer1;
+  };
+
+  const playRound = (e) => {
+    let row = e.target.dataset['row'];
+    let col = e.target.dataset['col'];
+    // TODO;
+    gameboard.getBoard()[row][col];
+    e.target.textContent = activePlayer.getToken();
+
+    switchPlayer();
+  };
+
+  return { playRound };
 })();
 
 // Rendering results
 // Use the state of the game to render results
 // Do not use the visuals on the DOM to control the state.
-function displayController() {
+const displayController = (() => {
   const gameboard = document.querySelector('#gameboard');
   const cells = Array.from(document.querySelectorAll('.cell'));
 
-  console.log(cells);
   cells.forEach((cell) => {
-    cell.addEventListener('click', playRound);
+    cell.addEventListener('click', gameController.playRound);
   });
-}
+})();
 
-const playRound = (e) => {
-  console.log(e.target);
-  e.target.textContent = 'x';
-};
-
-displayController();
-// const test = player();
-// test.setToken();
+const test = player();
+console.log(test.setToken());
