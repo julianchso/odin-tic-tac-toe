@@ -20,11 +20,9 @@ const gameboard = (() => {
     board[row][col] = player.getToken();
   };
 
-  const boardClickLocation = () => {};
-
   // Get board so that gameController can find index to set token
   const getBoard = () => {
-    board;
+    return { rows, cols, board };
   };
 
   const printBoard = () => {
@@ -59,27 +57,62 @@ const player = (token) => {
   return { getToken, setToken };
 };
 
+// Check for win
+const checkWinner = () => {
+  const winCombinations = [
+    // rows
+    [0, 0][(1, 0)][(2, 0)],
+    [1, 0][(1, 1)][(1, 2)],
+    [2, 0][(2, 1)][(2, 2)],
+    // columns
+    [0, 0][(1, 0)][(2, 0)],
+    [1, 0][(1, 1)][(1, 2)],
+    [2, 0][(2, 1)][(2, 2)],
+    // diagonals
+    [0, 0][(1, 1)][(2, 2)],
+    [0, 2][(1, 1)][(2, 0)],
+  ];
+};
+
 // gameController controls the flow of the game.
 // A module is used because only one is needed.
 
 const gameController = (() => {
   const _humanPlayer1 = player('x');
   const _humanPlayer2 = player('o');
+  const { rows, cols, board } = gameboard.getBoard();
 
+  console.log(gameboard.getBoard());
   let activePlayer = _humanPlayer1;
 
-  const switchPlayer = () => {
-    activePlayer = activePlayer == _humanPlayer1 ? _humanPlayer2 : _humanPlayer1;
-  };
-
+  // Set token
   const playRound = (e) => {
     let row = e.target.dataset['row'];
     let col = e.target.dataset['col'];
     // TODO;
-    gameboard.getBoard()[row][col];
+    gameboard.setPiece(row, col, activePlayer);
     e.target.textContent = activePlayer.getToken();
 
+    console.log(checkDraw());
     switchPlayer();
+  };
+
+  // Check for draw
+  const checkDraw = () => {
+    // TODO: try using array.every
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        if (board[i][j] === '') {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  // switch player
+  const switchPlayer = () => {
+    activePlayer = activePlayer == _humanPlayer1 ? _humanPlayer2 : _humanPlayer1;
   };
 
   return { playRound };
@@ -93,7 +126,7 @@ const displayController = (() => {
   const cells = Array.from(document.querySelectorAll('.cell'));
 
   cells.forEach((cell) => {
-    cell.addEventListener('click', gameController.playRound);
+    cell.addEventListener('click', gameController.playRound, { once: true });
   });
 })();
 
