@@ -146,3 +146,9 @@ button {
   border-radius: 10px;
   border: solid grey 2px;
 }
+
+#message {
+  width: 400px;
+  height: 20px;
+  margin: 20px auto;
+}

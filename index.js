@@ -57,23 +57,6 @@ const player = (token) => {
   return { getToken, setToken };
 };
 
-// Check for win
-const checkWinner = () => {
-  const winCombinations = [
-    // rows
-    [0, 0][(1, 0)][(2, 0)],
-    [1, 0][(1, 1)][(1, 2)],
-    [2, 0][(2, 1)][(2, 2)],
-    // columns
-    [0, 0][(1, 0)][(2, 0)],
-    [1, 0][(1, 1)][(1, 2)],
-    [2, 0][(2, 1)][(2, 2)],
-    // diagonals
-    [0, 0][(1, 1)][(2, 2)],
-    [0, 2][(1, 1)][(2, 0)],
-  ];
-};
-
 // gameController controls the flow of the game.
 // A module is used because only one is needed.
 
@@ -81,6 +64,7 @@ const gameController = (() => {
   const _humanPlayer1 = player('x');
   const _humanPlayer2 = player('o');
   const { rows, cols, board } = gameboard.getBoard();
+  const message = document.querySelector('#message');
 
   console.log(gameboard.getBoard());
   let activePlayer = _humanPlayer1;
@@ -93,8 +77,39 @@ const gameController = (() => {
     gameboard.setPiece(row, col, activePlayer);
     e.target.textContent = activePlayer.getToken();
 
-    console.log(checkDraw());
-    switchPlayer();
+    if (checkDraw()) {
+      message.textContent = 'Draw!';
+      console.log('Draw!');
+    } else {
+      switchPlayer();
+    }
+  };
+
+  // Check for win
+  const checkWinner = () => {
+    const equalsThree = (a == b, b == c);
+    const winner = null;
+
+    // check rows
+    for (let i = 0; i < cols; i++) {
+      if ((board[i][0] == board[i][1]) == board[i][2]) {
+        winner = board[i][0];
+      }
+    }
+
+    // check columns
+    for (let i = 0; i < rows; i++) {
+      if ((board[0][i] == board[1][i]) == board[2][i]) {
+        winner = board[0][i];
+      }
+    }
+
+    // check diagonal
+    if ((board[0][0] == board[1][1]) == board[2][2]) {
+      winner = board[0][0];
+    } else if ((board[0][2] == board[1][1]) == board[2][0]) {
+      winner = board[0][2];
+    }
   };
 
   // Check for draw
@@ -115,7 +130,7 @@ const gameController = (() => {
     activePlayer = activePlayer == _humanPlayer1 ? _humanPlayer2 : _humanPlayer1;
   };
 
-  return { playRound };
+  return { playRound, checkDraw };
 })();
 
 // Rendering results
