@@ -77,15 +77,15 @@ const gameController = (() => {
     gameboard.setPiece(row, col, activePlayer);
     e.target.textContent = activePlayer.getToken();
 
-    if (checkWinner()) {
-      message.textContent = `wins!`;
+    const winner = checkWinner();
+    if (winner) {
+      message.textContent = `${winner.toUpperCase()} wins!`;
     } else if (checkDraw()) {
       message.textContent = 'Draw!';
       console.log('Draw!');
     } else {
       switchPlayer();
     }
-    switchPlayer();
   };
 
   // Check for win
@@ -93,7 +93,9 @@ const gameController = (() => {
     let winner = null;
 
     const equalsThree = (a, b, c) => {
-      a == b && b == c && a != '';
+      if (a == b && b == c && a != '') {
+        return true;
+      }
     };
 
     // check rows
