@@ -77,39 +77,47 @@ const gameController = (() => {
     gameboard.setPiece(row, col, activePlayer);
     e.target.textContent = activePlayer.getToken();
 
-    if (checkDraw()) {
+    if (checkWinner()) {
+      message.textContent = `wins!`;
+    } else if (checkDraw()) {
       message.textContent = 'Draw!';
       console.log('Draw!');
     } else {
       switchPlayer();
     }
+    switchPlayer();
   };
 
   // Check for win
   const checkWinner = () => {
-    const equalsThree = (a == b, b == c);
-    const winner = null;
+    let winner = null;
+
+    const equalsThree = (a, b, c) => {
+      a == b && b == c && a != '';
+    };
 
     // check rows
     for (let i = 0; i < cols; i++) {
-      if ((board[i][0] == board[i][1]) == board[i][2]) {
+      if (equalsThree(board[i][0], board[i][1], board[i][2])) {
         winner = board[i][0];
       }
     }
 
     // check columns
     for (let i = 0; i < rows; i++) {
-      if ((board[0][i] == board[1][i]) == board[2][i]) {
+      if (equalsThree(board[0][i], board[1][i], board[2][i])) {
         winner = board[0][i];
       }
     }
 
     // check diagonal
-    if ((board[0][0] == board[1][1]) == board[2][2]) {
+    if (equalsThree(board[0][0], board[1][1], board[2][2])) {
       winner = board[0][0];
-    } else if ((board[0][2] == board[1][1]) == board[2][0]) {
+    } else if (equalsThree(board[0][2], board[1][1], board[2][0])) {
       winner = board[0][2];
     }
+    console.log(winner);
+    return winner;
   };
 
   // Check for draw
