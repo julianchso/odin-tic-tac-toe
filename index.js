@@ -1,5 +1,9 @@
 'use strict';
 
+// TODO: add reset button functionality. Might have to change addeventlistener once: true
+// TODO: add token selection functionality.
+// TODO: add AI (minimax algorithm)
+
 // Setting up the gameboard by using a 2D array.
 // A module is used because only one is needed.
 
